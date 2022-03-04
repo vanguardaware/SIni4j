@@ -37,6 +37,12 @@ public interface IIniSection
 	
 	String getString(String key);
 	
+	char getChar(String key);
+	
+	byte getByte(String key);
+	
+	short getShort(String key);
+	
 	boolean getBoolean(String key);
 	
 	int getInt(String key);

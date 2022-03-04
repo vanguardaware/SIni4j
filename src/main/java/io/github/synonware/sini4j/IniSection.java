@@ -60,37 +60,55 @@ public class IniSection implements IIniSection
 	@Override
 	public String getString(String key) 
 	{
-		return (String) get(key);
+		return String.valueOf(get(key));
 	}
 
 	@Override
+	public char getChar(String key) 
+	{
+		return getString(key).charAt(0);
+	}
+
+	@Override
+	public byte getByte(String key) 
+	{
+		return Byte.parseByte(getString(key));
+	}
+
+	@Override
+	public short getShort(String key) 
+	{
+		return Short.parseShort(getString(key));
+	}
+	
+	@Override
 	public boolean getBoolean(String key) 
 	{
-		return (boolean) get(key);
+		return Boolean.parseBoolean(getString(key));
 	}
 
 	@Override
 	public int getInt(String key) 
 	{
-		return (int) get(key);
+		return Integer.parseInt(getString(key));
 	}
 
 	@Override
 	public float getFloat(String key) 
 	{
-		return (float) get(key);
+		return Float.parseFloat(getString(key));
 	}
 
 	@Override
 	public double getDouble(String key) 
 	{
-		return (double) get(key);
+		return Double.parseDouble(getString(key));
 	}
 
 	@Override
 	public long getLong(String key)
 	{
-		return (long) get(key);
+		return Long.parseLong(getString(key));
 	}	
 
 	public Map<String, Object> getMap() 
