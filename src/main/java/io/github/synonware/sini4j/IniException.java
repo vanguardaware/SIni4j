@@ -1,7 +1,7 @@
 /**
 	MIT License
 	
-	Copyright (c) 2022 Synonware MEI.
+	Copyright (c) 2022 Synonware
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,6 @@
 */
 package io.github.synonware.sini4j;
 
-/**
- * @author Gabriel (https://github.com/gbrlandrade)
- */
 public class IniException extends RuntimeException 
 {
 

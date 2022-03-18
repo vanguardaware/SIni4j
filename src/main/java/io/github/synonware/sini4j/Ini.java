@@ -1,7 +1,7 @@
 /**
 	MIT License
 	
-	Copyright (c) 2022 Synonware MEI.
+	Copyright (c) 2022 Synonware
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author Gabriel (https://github.com/gbrlandrade)
- */
 public class Ini implements IIni
 {
 
