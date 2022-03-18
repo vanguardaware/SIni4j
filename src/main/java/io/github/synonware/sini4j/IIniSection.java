@@ -33,7 +33,11 @@ public interface IIniSection
 	
 	void remove(String key);
 	
-	Object get(String key);
+	Object get(String key);	
+	
+	boolean has(String key);
+	
+	boolean hasValue(String key);
 	
 	String getString(String key);
 	

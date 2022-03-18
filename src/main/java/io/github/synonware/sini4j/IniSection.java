@@ -110,7 +110,19 @@ public class IniSection implements IIniSection
 	{
 		return Long.parseLong(getString(key));
 	}	
+	
+	@Override
+	public boolean has(String key) 
+	{
+		return getMap().containsKey(key);
+	}
 
+	@Override
+	public boolean hasValue(String key) 
+	{
+		return getMap().containsValue(key);
+	}
+	
 	public Map<String, Object> getMap() 
 	{
 		return sectorValues;

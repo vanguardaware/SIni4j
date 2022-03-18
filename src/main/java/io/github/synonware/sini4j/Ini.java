@@ -160,7 +160,7 @@ public class Ini implements IIni
 		}
 	}
 
-	public Map<String, IniSection> getSection()
+	public Map<String, IniSection> getSections()
 	{
 		return values;
 	}
@@ -187,6 +187,31 @@ public class Ini implements IIni
 		{
 			values.get(name).add(key, value);
 		}
+	}
+	
+	public boolean hasSection(String section)
+	{
+		return getSections().containsKey(section);
+	}
+	
+	public boolean hasKey(String section, String key)
+	{
+		if(hasSection(section))
+		{
+			return getSection(section).has(key);
+		}
+		
+		return false;
+	}
+	
+	public boolean hasValue(String section, String value)
+	{
+		if(hasSection(section))
+		{
+			return getSection(section).hasValue(value);
+		}
+		
+		return false;
 	}
 
 	public File getFile() 
