@@ -1,7 +1,7 @@
 /**
 	MIT License
 	
-	Copyright (c) 2022 Synonware
+	Copyright (c) 2022 Different Waveform
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-package io.github.synonware.sini4j;
+package me.differentwaveform.sini4j;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class IniSection implements IIniSection
+public class Section implements ISection
 {
 	
 	private Map<String, Object> sectorValues = new LinkedHashMap<>();
@@ -107,6 +107,12 @@ public class IniSection implements IIniSection
 	{
 		return Long.parseLong(getString(key));
 	}	
+		
+	@Override
+	public <T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key) 
+	{
+		return Enum.valueOf(enumType, getString(key));
+	}
 	
 	@Override
 	public boolean has(String key) 
@@ -130,9 +136,5 @@ public class IniSection implements IIniSection
 	{
 		return sectorValues.toString();
 	}
-	
-	@Override
-	public <T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key) {
-		return Enum.valueOf(enumType, getString(key));
-	}
+
 }

@@ -1,7 +1,7 @@
 /**
 	MIT License
 	
-	Copyright (c) 2022 Synonware
+	Copyright (c) 2022 Different Waveform
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-package io.github.synonware.sini4j;
+package me.differentwaveform.sini4j;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,30 +43,53 @@ public class Ini implements IIni
 
 	private File iniFile;
 	private InputStream iniInputStream;
-
+	
 	private Scanner iniScanner;
 	
-	private Map<String, IniSection> values = new LinkedHashMap<>();
+	private Map<String, Section> values = new LinkedHashMap<>();
 	
+	/**
+	 * Creates an empty INI, which can be saved as a new file later 
+	 */
 	public Ini() 
 	{
 		super();
 	}
 	
+	/**
+	 * Load an INI file from a InputStream 
+	 * @param iniStream | The InputStream that will be loaded
+	 */
 	public Ini(InputStream iniStream) 
 	{
 		this.iniInputStream = iniStream;
 		this.iniScanner = new Scanner(iniInputStream);
+		
 		this.reload();
 	}
 	
-	public Ini(File iniFile) throws FileNotFoundException 
+	/**
+	 * Load an INI file from a File 
+	 * @param iniFile | The file that will be loaded 
+	 */
+	public Ini(File iniFile)
 	{
-		this.iniFile = iniFile;
-		this.iniScanner = new Scanner(iniFile);
-		this.reload();
+		try
+		{
+			this.iniFile = iniFile;
+			this.iniScanner = new Scanner(iniFile);
+			this.reload();
+		} 
+		catch (IniException | FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
+	/**
+	 * Used to reload current configuration. 
+	 * Don't forget to save first or all unsaved parameters will be erased 
+	 */
 	@Override
 	public void reload() 
 	{
@@ -93,19 +116,14 @@ public class Ini implements IIni
 				Matcher sectionMatcher = sectionPattern.matcher(ln);
 				Matcher valuesMatcher = valuesPattern.matcher(ln);
 				
-				//Find section
 				if(sectionMatcher.find())
 				{
 					sectionName = sectionMatcher.group(1);
-					
-					//Init section
-					this.values.put(sectionName, new IniSection());
+					this.values.put(sectionName, new Section());
 				}
-				
-				//Add sections values to map
+
 				while(!sectionMatcher.find()) 
 				{	
-				    //Add value to map
 				    if(valuesMatcher.find())
 				    {
 				    	this.values.get(sectionName).add(valuesMatcher.group(1), valuesMatcher.group(2));
@@ -117,6 +135,9 @@ public class Ini implements IIni
 		}
 	}
 
+	/**
+	 * Save current configuration (Only for configurations loaded from file)
+	 */
 	@Override
 	public void store()
 	{
@@ -128,6 +149,11 @@ public class Ini implements IIni
 		store(iniFile);
 	}
 	
+	
+	/**
+	 * Save current configuration as a new file
+	 * @param iniFile | The file to be saved
+	 */
 	@Override
 	public void store(File iniFile)
 	{
@@ -157,26 +183,46 @@ public class Ini implements IIni
 		}
 	}
 
-	public Map<String, IniSection> getSections()
+	/**
+	 * Returns all sections present in the configuration 
+	 * @return | Ini sections
+	 */
+	public Map<String, Section> getSections()
 	{
 		return values;
 	}
 	
-	public IniSection getSection(String name)
+	/**
+	 * Returns a specific section present in the configuration 
+	 * @param name | Section name
+	 * @return | The section
+	 */
+	public Section getSection(String name)
 	{
 		return values.get(name);
 	}
 	
-	public void addSection(String name, IniSection section)
+	/**
+	 * Creates a new section in the current configuration
+	 * @param name | Section name
+	 * @param section | Section values
+	 */
+	public void addSection(String name, Section section)
 	{
 		values.put(name, section);
 	}
 	
+	/**
+	 * Creates a new section in the current configuration 
+	 * @param name | Section name
+	 * @param key | Item name
+	 * @param value | Item value
+	 */
 	public void addSection(String name, String key, Object value)
 	{
 		if(!values.containsKey(name))
 		{
-			IniSection iniSector = new IniSection();
+			Section iniSector = new Section();
 			iniSector.add(key, value);
 			values.put(name, iniSector);
 		}
@@ -186,11 +232,22 @@ public class Ini implements IIni
 		}
 	}
 	
+	/**
+	 * Checks if the specified section exists in the current configuration 
+	 * @param section | Section name
+	 * @return | If the section exists
+	 */
 	public boolean hasSection(String section)
 	{
 		return getSections().containsKey(section);
 	}
 	
+	/**
+	 * Checks if the key exists in the specified section
+	 * @param section | Section name
+	 * @param key | Key name
+	 * @return | If the key exists in the specified session
+	 */
 	public boolean hasKey(String section, String key)
 	{
 		if(hasSection(section))
@@ -201,6 +258,12 @@ public class Ini implements IIni
 		return false;
 	}
 	
+	/**
+	 * Checks if the value exists in the specified section 
+	 * @param section | Section name
+	 * @param key | Value name
+	 * @return | If the value exists in the specified session
+	 */
 	public boolean hasValue(String section, String value)
 	{
 		if(hasSection(section))
