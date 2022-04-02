@@ -131,4 +131,8 @@ public class IniSection implements IIniSection
 		return sectorValues.toString();
 	}
 	
+	@Override
+	public <T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key) {
+		return Enum.valueOf(enumType, getString(key));
+	}
 }
