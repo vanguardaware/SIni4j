@@ -54,4 +54,5 @@ public interface IIniSection
 	
 	long getLong(String key);
 	
+	int <T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key);
 }
