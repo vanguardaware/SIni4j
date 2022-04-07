@@ -44,9 +44,9 @@ iniFile.store();
 
 ## Download
 
-Latest Release: [GitHub Release](https://github.com/synonware/SIni4j/releases/latest) <br>
+Latest Release: [GitHub Release](https://github.com/differentwaveform/SIni4j/releases/latest) <br>
 
-[![](https://jitpack.io/v/synonware/SIni4j.svg)](https://jitpack.io/#synonware/SIni4j)
+[![](https://jitpack.io/v/synonware/SIni4j.svg)](https://jitpack.io/#differentwaveform/SIni4j)
 
 
 **Maven**
@@ -59,7 +59,7 @@ Latest Release: [GitHub Release](https://github.com/synonware/SIni4j/releases/la
 </repositories>
 
 <dependency>
-	<groupId>com.github.synonware</groupId>
+	<groupId>com.github.differentwaveform</groupId>
 		<artifactId>SIni4j</artifactId>
 	    <version>VERSION</version>
 	</dependency>
@@ -78,7 +78,7 @@ allprojects
 
 dependencies 
 {
-	implementation 'com.github.synonware:SIni4j:VERSION'
+	implementation 'com.github.differentwaveform:SIni4j:VERSION'
 }
 ```
 
