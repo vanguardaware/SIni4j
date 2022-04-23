@@ -38,21 +38,21 @@ public interface ISection
 	
 	String getString(String key);
 	
-	char getChar(String key);
+	Character getChar(String key);
 	
-	byte getByte(String key);
+	Byte getByte(String key);
 	
-	short getShort(String key);
+	Short getShort(String key);
 	
-	boolean getBoolean(String key);
+	Boolean getBoolean(String key);
 	
-	int getInt(String key);
+	Integer getInt(String key);
 	
-	float getFloat(String key);
+	Float getFloat(String key);
 	
-	double getDouble(String key);
+	Double getDouble(String key);
 	
-	long getLong(String key);
+	Long getLong(String key);
 	
 	<T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key);
 	
