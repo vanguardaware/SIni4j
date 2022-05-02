@@ -26,114 +26,136 @@ package me.differentwaveform.sini4j;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Section implements ISection
-{
-	
+public class Section implements ISection {
+
 	private Map<String, Object> sectorValues = new LinkedHashMap<>();
 
 	@Override
-	public void add(String key, Object value) 
-	{
-		if(sectorValues.containsKey(key))
-		{
+	public void add(String key, Object value) {
+		if (sectorValues.containsKey(key)) {
 			remove(key);
 		}
-		
+
 		sectorValues.put(key, value);
 	}
 
 	@Override
-	public void remove(String key) 
-	{
+	public void remove(String key) {
 		sectorValues.remove(key);
 	}
 
 	@Override
-	public Object get(String key) 
-	{
+	public Object get(String key) {
 		return sectorValues.get(key);
 	}
 
 	@Override
-	public String getString(String key) 
-	{
-		return String.valueOf(get(key));
+	public String getString(String key) {
+		Object o = get(key);
+		if (o == null) {
+			System.err.println("Could not find '" + key + "' key");
+			return null;
+		}
+		return String.valueOf(o);
 	}
 
 	@Override
-	public char getChar(String key) 
-	{
+	public Character getChar(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
 		return getString(key).charAt(0);
 	}
 
 	@Override
-	public byte getByte(String key) 
-	{
-		return Byte.parseByte(getString(key));
+	public Byte getByte(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Byte.parseByte(o);
 	}
 
 	@Override
-	public short getShort(String key) 
-	{
-		return Short.parseShort(getString(key));
-	}
-	
-	@Override
-	public boolean getBoolean(String key) 
-	{
-		return Boolean.parseBoolean(getString(key));
+	public Short getShort(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Short.parseShort(o);
 	}
 
 	@Override
-	public int getInt(String key) 
-	{
-		return Integer.parseInt(getString(key));
+	public Boolean getBoolean(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Boolean.parseBoolean(o);
 	}
 
 	@Override
-	public float getFloat(String key) 
-	{
-		return Float.parseFloat(getString(key));
+	public Integer getInt(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Integer.parseInt(o);
 	}
 
 	@Override
-	public double getDouble(String key) 
-	{
-		return Double.parseDouble(getString(key));
+	public Float getFloat(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Float.parseFloat(o);
 	}
 
 	@Override
-	public long getLong(String key)
-	{
-		return Long.parseLong(getString(key));
-	}	
-		
-	@Override
-	public <T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key) 
-	{
-		return Enum.valueOf(enumType, getString(key));
+	public Double getDouble(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Double.parseDouble(o);
 	}
-	
+
 	@Override
-	public boolean has(String key) 
-	{
+	public Long getLong(String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Long.parseLong(o);
+	}
+
+	@Override
+	public <T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key) {
+		String o = getString(key);
+		if (o == null) {
+			return null;
+		}
+		return Enum.valueOf(enumType, o);
+	}
+
+	@Override
+	public boolean has(String key) {
 		return getMap().containsKey(key);
 	}
 
 	@Override
-	public boolean hasValue(String key) 
-	{
+	public boolean hasValue(String key) {
 		return getMap().containsValue(key);
 	}
-	
-	public Map<String, Object> getMap() 
-	{
+
+	public Map<String, Object> getMap() {
 		return sectorValues;
 	}
-	
+
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return sectorValues.toString();
 	}
 
