@@ -46,7 +46,7 @@ public class Ini implements IIni
 
 	private Scanner iniScanner;
 
-	private Map<String, Section> values = new LinkedHashMap<>();
+	private final Map<String, Section> values = new LinkedHashMap<>();
 
 	/**
 	 * Creates an empty INI, which can be saved as a new file later 
@@ -122,14 +122,12 @@ public class Ini implements IIni
 					this.values.put(sectionName, new Section());
 				}
 
-				while(!sectionMatcher.find())
+				if(!sectionMatcher.find())
 				{
 					if(valuesMatcher.find())
 					{
 						this.values.get(sectionName).add(valuesMatcher.group(1).trim(), valuesMatcher.group(2).trim());
 					}
-
-					break;
 				}
 			}
 		}
