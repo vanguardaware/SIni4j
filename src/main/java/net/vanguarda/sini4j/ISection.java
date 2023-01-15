@@ -1,7 +1,7 @@
 /**
 	MIT License
 	
-	Copyright (c) 2022 Different Waveform.
+	Copyright (c) 2023 Vangurada.
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,39 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
+package net.vanguarda.sini4j;
 
-package me.differentwaveform.sini4j;
-
-import java.io.File;
-
-public interface IIni 
+public interface ISection 
 {
 
-	void reload();
+	void add(String key, Object value);
 	
-	void store();
+	void remove(String key);
 	
-	void store(File iniFile);
+	Object get(String key);	
+	
+	boolean has(String key);
+	
+	boolean hasValue(String key);
+	
+	String getString(String key);
+	
+	Character getChar(String key);
+	
+	Byte getByte(String key);
+	
+	Short getShort(String key);
+	
+	Boolean getBoolean(String key);
+	
+	Integer getInt(String key);
+	
+	Float getFloat(String key);
+	
+	Double getDouble(String key);
+	
+	Long getLong(String key);
+	
+	<T extends Enum<T>> T getEnumConstant(Class<T> enumType, String key);
 	
 }

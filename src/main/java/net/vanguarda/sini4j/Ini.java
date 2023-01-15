@@ -1,7 +1,7 @@
 /**
 	MIT License
 	
-	Copyright (c) 2022 Different Waveform
+	Copyright (c) 2023 Vangurada.
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-package me.differentwaveform.sini4j;
+package net.vanguarda.sini4j;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -274,11 +274,19 @@ public class Ini implements IIni
 		return false;
 	}
 
+	/**
+	 * Return INI file
+	 * @return INI File
+	 */
 	public File getFile() 
 	{
 		return iniFile;
 	}
 
+	/**
+	 * Return INI InputStream
+	 * @return INI InputStream
+	 */
 	public InputStream getStream() 
 	{
 		return iniInputStream;

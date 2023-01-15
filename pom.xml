@@ -8,7 +8,7 @@
 	<version>1.1</version>
 
 	<name>SIni4j</name>
-	<url>https://github.com/synonware/SIni4j</url>
+	<url>https://github.com/differentwaveform/SIni4j</url>
 	<description>Simple Ini Parser for Java or SIni4j is an simple .ini parser for Java</description>
 
 	<licenses>
@@ -22,8 +22,7 @@
 		<developer>
 			<name>Gabriel Andrade</name>
 			<email>gabrielandradedub@gmail.com</email>
-			<organization>io.github.synonware</organization>
-			<organizationUrl>https://github.com/synonware/</organizationUrl>
+			<organizationUrl>https://github.com/differentwaveform/</organizationUrl>
 		</developer>
 	</developers>
 

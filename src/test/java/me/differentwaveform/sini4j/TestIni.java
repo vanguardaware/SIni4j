@@ -1,5 +1,7 @@
 package me.differentwaveform.sini4j;
 
+import net.vanguarda.sini4j.Ini;
+
 public class TestIni 
 {
 

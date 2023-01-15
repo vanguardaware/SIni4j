@@ -1,7 +1,7 @@
 /**
 	MIT License
 	
-	Copyright (c) 2022 Different Waveform
+	Copyright (c) 2023 Vanguarda.
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -21,36 +21,18 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-package me.differentwaveform.sini4j;
 
-public class IniException extends RuntimeException 
+package net.vanguarda.sini4j;
+
+import java.io.File;
+
+public interface IIni 
 {
 
-	private static final long serialVersionUID = 1L;
-
-	public IniException() 
-	{
-		super();
-	}
-
-	public IniException(String message) 
-	{
-		super(message);
-	}
-
-	public IniException(Throwable throwable) 
-	{
-		super(throwable);
-	}
-
-	public IniException(String message, Throwable throwable) 
-	{
-		super(message, throwable);
-	}
-
-	public IniException(String message, Throwable throwable, boolean var3, boolean var4)
-	{
-		super(message, throwable, var3, var4);
-	}
-
+	void reload();
+	
+	void store();
+	
+	void store(File iniFile);
+	
 }
