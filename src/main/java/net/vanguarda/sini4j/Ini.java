@@ -1,26 +1,26 @@
 /**
-	MIT License
-	
-	Copyright (c) 2023 Vangurada.
-	
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-	
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-	
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
-*/
+ MIT License
+
+ Copyright (c) 2023 Vangurada.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 package net.vanguarda.sini4j;
 
 import java.io.File;
@@ -43,31 +43,31 @@ public class Ini implements IIni
 
 	private File iniFile;
 	private InputStream iniInputStream;
-	
+
 	private Scanner iniScanner;
-	
+
 	private Map<String, Section> values = new LinkedHashMap<>();
-	
+
 	/**
 	 * Creates an empty INI, which can be saved as a new file later 
 	 */
-	public Ini() 
+	public Ini()
 	{
 		super();
 	}
-	
+
 	/**
 	 * Load an INI file from a InputStream 
 	 * @param iniStream | The InputStream that will be loaded
 	 */
-	public Ini(InputStream iniStream) 
+	public Ini(InputStream iniStream)
 	{
 		this.iniInputStream = iniStream;
 		this.iniScanner = new Scanner(iniInputStream);
-		
+
 		this.reload();
 	}
-	
+
 	/**
 	 * Load an INI file from a File 
 	 * @param iniFile | The file that will be loaded 
@@ -79,34 +79,34 @@ public class Ini implements IIni
 			this.iniFile = iniFile;
 			this.iniScanner = new Scanner(iniFile);
 			this.reload();
-		} 
-		catch (IniException | FileNotFoundException e) 
+		}
+		catch (IniException | FileNotFoundException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Used to reload current configuration. 
 	 * Don't forget to save first or all unsaved parameters will be erased 
 	 */
 	@Override
-	public void reload() 
+	public void reload()
 	{
 		if(iniScanner == null)
 		{
 			return;
 		}
-		
+
 		Pattern sectionPattern = Pattern.compile(SECTOR);
-	    Pattern valuesPattern = Pattern.compile(VALUES);
-		
-	    String sectionName = "";
-	    
-		while (iniScanner.hasNextLine()) 
-		{			
+		Pattern valuesPattern = Pattern.compile(VALUES);
+
+		String sectionName = "";
+
+		while (iniScanner.hasNextLine())
+		{
 			String ln = iniScanner.nextLine();
-			
+
 			if(ln.startsWith("" + COMMENT.charAt(0)) || ln.startsWith("" + COMMENT.charAt(1)))
 			{
 				//Skip Comments
@@ -115,20 +115,20 @@ public class Ini implements IIni
 			{
 				Matcher sectionMatcher = sectionPattern.matcher(ln);
 				Matcher valuesMatcher = valuesPattern.matcher(ln);
-				
+
 				if(sectionMatcher.find())
 				{
 					sectionName = sectionMatcher.group(1);
 					this.values.put(sectionName, new Section());
 				}
 
-				while(!sectionMatcher.find()) 
-				{	
-				    if(valuesMatcher.find())
-				    {
-				    	this.values.get(sectionName).add(valuesMatcher.group(1), valuesMatcher.group(2));
-				    }
-				    
+				while(!sectionMatcher.find())
+				{
+					if(valuesMatcher.find())
+					{
+						this.values.get(sectionName).add(valuesMatcher.group(1).trim(), valuesMatcher.group(2).trim());
+					}
+
 					break;
 				}
 			}
@@ -145,11 +145,11 @@ public class Ini implements IIni
 		{
 			throw new IniException("Cannot modify an inputstream");
 		}
-		
+
 		store(iniFile);
 	}
-	
-	
+
+
 	/**
 	 * Save current configuration as a new file
 	 * @param iniFile | The file to be saved
@@ -157,43 +157,43 @@ public class Ini implements IIni
 	@Override
 	public void store(File iniFile)
 	{
-		try 
+		try
 		{
-			FileWriter myWriter = new FileWriter(iniFile);			   
-			
+			FileWriter myWriter = new FileWriter(iniFile);
+
 			for(String i : values.keySet())
 			{
 				myWriter.write("[" + i + "]");
 				myWriter.write(System.lineSeparator());
-				
+
 				for(String keyName : values.get(i).getMap().keySet())
 				{
 					myWriter.write(keyName + "=" + values.get(i).get(keyName));
 					myWriter.write(System.lineSeparator());
 				}
-				
+
 				myWriter.write(System.lineSeparator());
 			}
-		    
-		    myWriter.close();
-		} 
-		catch (IOException e) 
+
+			myWriter.close();
+		}
+		catch (IOException e)
 		{
 			throw new IniException(e.getCause());
 		}
 	}
 
 	/**
-	 * Returns all sections present in the configuration 
+	 * Returns all sections present in the configuration
 	 * @return | Ini sections
 	 */
 	public Map<String, Section> getSections()
 	{
 		return values;
 	}
-	
+
 	/**
-	 * Returns a specific section present in the configuration 
+	 * Returns a specific section present in the configuration
 	 * @param name | Section name
 	 * @return | The section
 	 */
@@ -201,7 +201,7 @@ public class Ini implements IIni
 	{
 		return values.get(name);
 	}
-	
+
 	/**
 	 * Creates a new section in the current configuration
 	 * @param name | Section name
@@ -211,9 +211,9 @@ public class Ini implements IIni
 	{
 		values.put(name, section);
 	}
-	
+
 	/**
-	 * Creates a new section in the current configuration 
+	 * Creates a new section in the current configuration
 	 * @param name | Section name
 	 * @param key | Item name
 	 * @param value | Item value
@@ -231,9 +231,9 @@ public class Ini implements IIni
 			values.get(name).add(key, value);
 		}
 	}
-	
+
 	/**
-	 * Checks if the specified section exists in the current configuration 
+	 * Checks if the specified section exists in the current configuration
 	 * @param section | Section name
 	 * @return | If the section exists
 	 */
@@ -241,7 +241,7 @@ public class Ini implements IIni
 	{
 		return getSections().containsKey(section);
 	}
-	
+
 	/**
 	 * Checks if the key exists in the specified section
 	 * @param section | Section name
@@ -254,14 +254,14 @@ public class Ini implements IIni
 		{
 			return getSection(section).has(key);
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
-	 * Checks if the value exists in the specified section 
+	 * Checks if the value exists in the specified section
 	 * @param section | Section name
-	 * @param key | Value name
+	 * @param value | Value name
 	 * @return | If the value exists in the specified session
 	 */
 	public boolean hasValue(String section, String value)
@@ -270,7 +270,7 @@ public class Ini implements IIni
 		{
 			return getSection(section).hasValue(value);
 		}
-		
+
 		return false;
 	}
 
@@ -278,7 +278,7 @@ public class Ini implements IIni
 	 * Return INI file
 	 * @return INI File
 	 */
-	public File getFile() 
+	public File getFile()
 	{
 		return iniFile;
 	}
@@ -287,9 +287,9 @@ public class Ini implements IIni
 	 * Return INI InputStream
 	 * @return INI InputStream
 	 */
-	public InputStream getStream() 
+	public InputStream getStream()
 	{
 		return iniInputStream;
 	}
-	
+
 }
