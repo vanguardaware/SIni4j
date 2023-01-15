@@ -38,8 +38,8 @@ public class Ini implements IIni
 {
 
 	public static final String COMMENT = ";#";
-	public static final String SECTOR = "^\\[(.*?)\\]";
-	public static final String VALUES = "(?:, )?([^=]+)\\=([^,]+)";
+	public static final String SECTOR = "^\\[(.*?)]";
+	public static final String VALUES = "(?:, )?([^=]+)=([^,]+)";
 
 	private File iniFile;
 	private InputStream iniInputStream;
@@ -107,11 +107,7 @@ public class Ini implements IIni
 		{
 			String ln = iniScanner.nextLine();
 
-			if(ln.startsWith("" + COMMENT.charAt(0)) || ln.startsWith("" + COMMENT.charAt(1)))
-			{
-				//Skip Comments
-			}
-			else
+			if(!(ln.startsWith("" + COMMENT.charAt(0)) || ln.startsWith("" + COMMENT.charAt(1))))
 			{
 				Matcher sectionMatcher = sectionPattern.matcher(ln);
 				Matcher valuesMatcher = valuesPattern.matcher(ln);
